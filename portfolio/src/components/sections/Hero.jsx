@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaArrowDown } from 'react-icons/fa'
+import { Github, Linkedin, Instagram, Mail, ArrowDown } from 'lucide-react'
 import { personalInfo, socialLinks } from '../../data/portfolioData'
 
 const roles = [
@@ -18,6 +18,7 @@ const Hero = () => {
   const [charIndex, setCharIndex] = useState(0)
   const canvasRef = useRef(null)
 
+  // Typewriter Effect
   useEffect(() => {
     const role = roles[currentRole]
     const typingSpeed = isDeleting ? 50 : 100
@@ -42,6 +43,7 @@ const Hero = () => {
     return () => clearTimeout(timer)
   }, [charIndex, isDeleting, currentRole])
 
+  // Particle Canvas
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -117,12 +119,14 @@ const Hero = () => {
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{ background: 'linear-gradient(135deg, #0B0C2A 0%, #1a1b4b 50%, #0B0C2A 100%)' }}
     >
+      {/* Particle Canvas */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 pointer-events-none"
         style={{ zIndex: 0 }}
       />
 
+      {/* Glow Orbs */}
       <div
         className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full pointer-events-none"
         style={{
@@ -138,9 +142,12 @@ const Hero = () => {
         }}
       />
 
+      {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left - Text */}
           <div className="order-2 lg:order-1">
+            {/* Badge */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -157,6 +164,7 @@ const Hero = () => {
               </span>
             </motion.div>
 
+            {/* Name */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -179,6 +187,7 @@ const Hero = () => {
               </h1>
             </motion.div>
 
+            {/* Typewriter */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -194,6 +203,7 @@ const Hero = () => {
               />
             </motion.div>
 
+            {/* Description */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -205,6 +215,7 @@ const Hero = () => {
               to user dashboards and admin panels — I build it all.
             </motion.p>
 
+            {/* Stats */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -234,6 +245,7 @@ const Hero = () => {
               ))}
             </motion.div>
 
+            {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -259,8 +271,10 @@ const Hero = () => {
                 View My Work
               </motion.a>
 
-              <motion.a
-                href="mailto:ujanfahad@gmail.com"
+              <motion.button
+                onClick={() => {
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+                }}
                 className="px-8 py-3 rounded-full font-semibold transition-all duration-300"
                 style={{
                   border: '2px solid #7B2FBE',
@@ -273,9 +287,10 @@ const Hero = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 Hire Me
-              </motion.a>
+              </motion.button>
             </motion.div>
 
+            {/* Social Links */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -286,10 +301,10 @@ const Hero = () => {
                 Follow me:
               </span>
               {[
-                { icon: FaGithub, href: socialLinks.github, label: 'GitHub' },
-                { icon: FaLinkedin, href: socialLinks.linkedin, label: 'LinkedIn' },
-                { icon: FaInstagram, href: socialLinks.instagram, label: 'Instagram' },
-                { icon: FaEnvelope, href: socialLinks.email, label: 'Email' },
+                { icon: Github, href: socialLinks.github, label: 'GitHub' },
+                { icon: Linkedin, href: socialLinks.linkedin, label: 'LinkedIn' },
+                { icon: Instagram, href: socialLinks.instagram, label: 'Instagram' },
+                { icon: Mail, href: socialLinks.email, label: 'Email' },
               ].map(({ icon: Icon, href, label }) => (
                 <motion.a
                   key={label}
@@ -317,6 +332,7 @@ const Hero = () => {
             </motion.div>
           </div>
 
+          {/* Right - Photo */}
           <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
@@ -324,6 +340,7 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="relative"
             >
+              {/* Rotating Ring */}
               <motion.div
                 className="absolute inset-0 rounded-full"
                 style={{
@@ -335,6 +352,7 @@ const Hero = () => {
                 transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
               />
 
+              {/* Photo Container */}
               <div
                 className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden"
                 style={{
@@ -342,26 +360,30 @@ const Hero = () => {
                   background: 'linear-gradient(#0B0C2A, #0B0C2A) padding-box, linear-gradient(135deg, #7B2FBE, #00D4FF) border-box',
                 }}
               >
+                {/* ✅ FIXED - Correct image path */}
                 <img
-                  src="public/assets/images/fahad.jpeg"
+                  src="/assets/images/fahad.jpeg"
                   alt="Fahad Ali"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                   onError={(e) => {
                     e.target.style.display = 'none'
                     e.target.nextSibling.style.display = 'flex'
                   }}
                 />
+                {/* Fallback */}
                 <div
                   className="absolute inset-0 items-center justify-center text-6xl font-bold hidden"
                   style={{
                     background: 'linear-gradient(135deg, #1a1b4b, #0B0C2A)',
                     color: '#7B2FBE',
+                    display: 'none',
                   }}
                 >
                   FA
                 </div>
               </div>
 
+              {/* Floating Badges */}
               <motion.div
                 className="absolute -top-4 -right-4 px-3 py-2 rounded-xl text-xs font-mono text-white"
                 style={{
@@ -401,6 +423,7 @@ const Hero = () => {
           </div>
         </div>
 
+        {/* Scroll Indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -417,7 +440,7 @@ const Hero = () => {
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 1.5, repeat: Infinity }}
           >
-            <FaArrowDown size={16} style={{ color: '#7B2FBE' }} />
+            <ArrowDown size={16} style={{ color: '#7B2FBE' }} />
           </motion.div>
         </motion.div>
       </div>

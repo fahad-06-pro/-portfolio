@@ -1,17 +1,20 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { useScrollAnimation, fadeUpVariants, staggerContainerVariants } from '../../hooks/useScrollAnimation'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
 import { skills } from '../../data/portfolioData'
 
 const SkillBar = ({ name, level, index }) => {
-  const { ref, controls, inView } = useScrollAnimation()
+  const [ref, inView] = useInView({
+    threshold: 0.1,
+    triggerOnce: false,
+  })
 
   return (
     <motion.div
       ref={ref}
-      variants={fadeUpVariants}
-      initial="hidden"
-      animate={controls}
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.4, delay: index * 0.05 }}
       className="mb-4"
     >
       <div className="flex justify-between items-center mb-2">
@@ -40,8 +43,8 @@ const SkillBar = ({ name, level, index }) => {
 
 const Skills = () => {
   const [activeCategory, setActiveCategory] = useState('All')
-  const { ref: titleRef, controls: titleControls } = useScrollAnimation()
-  const { ref: cardsRef, controls: cardsControls } = useScrollAnimation()
+
+  const [titleRef, titleInView] = useInView({ threshold: 0.1, triggerOnce: true })
 
   const categories = ['All', ...skills.map((s) => s.category)]
 
@@ -50,7 +53,6 @@ const Skills = () => {
       ? skills
       : skills.filter((s) => s.category === activeCategory)
 
-  // All tech icons
   const allTechIcons = [
     { name: 'React', icon: '⚛️', color: '#61DAFB' },
     { name: 'Node.js', icon: '🟢', color: '#68A063' },
@@ -85,9 +87,9 @@ const Skills = () => {
         {/* Title */}
         <motion.div
           ref={titleRef}
-          variants={fadeUpVariants}
-          initial="hidden"
-          animate={titleControls}
+          initial={{ opacity: 0, y: 40 }}
+          animate={titleInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
           <p className="text-sm font-mono mb-3" style={{ color: '#00D4FF' }}>
@@ -141,12 +143,7 @@ const Skills = () => {
         </div>
 
         {/* Filter Tabs */}
-        <motion.div
-          variants={fadeUpVariants}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-wrap justify-center gap-3 mb-12"
-        >
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
           {categories.map((cat) => (
             <motion.button
               key={cat}
@@ -169,49 +166,51 @@ const Skills = () => {
               {cat}
             </motion.button>
           ))}
-        </motion.div>
+        </div>
 
         {/* Skills Grid */}
-        <motion.div
-          ref={cardsRef}
-          variants={staggerContainerVariants}
-          initial="hidden"
-          animate={cardsControls}
-          className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6"
-        >
-          {filteredSkills.map((skillGroup) => (
-            <motion.div
-              key={skillGroup.category}
-              variants={fadeUpVariants}
-              className="p-6 rounded-2xl"
-              style={{
-                background: 'rgba(18, 20, 74, 0.6)',
-                border: '1px solid rgba(30, 32, 80, 0.8)',
-                backdropFilter: 'blur(10px)',
-              }}
-              whileHover={{
-                borderColor: 'rgba(123, 47, 190, 0.4)',
-                boxShadow: '0 10px 30px rgba(123,47,190,0.15)',
-              }}
-            >
-              {/* Category Header */}
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-2xl">{skillGroup.icon}</span>
-                <h3 className="text-white font-bold">{skillGroup.category}</h3>
-              </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeCategory}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6"
+          >
+            {filteredSkills.map((skillGroup) => (
+              <motion.div
+                key={skillGroup.category}
+                className="p-6 rounded-2xl"
+                style={{
+                  background: 'rgba(18, 20, 74, 0.6)',
+                  border: '1px solid rgba(30, 32, 80, 0.8)',
+                  backdropFilter: 'blur(10px)',
+                }}
+                whileHover={{
+                  borderColor: 'rgba(123, 47, 190, 0.4)',
+                  boxShadow: '0 10px 30px rgba(123,47,190,0.15)',
+                }}
+              >
+                {/* Category Header */}
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="text-2xl">{skillGroup.icon}</span>
+                  <h3 className="text-white font-bold">{skillGroup.category}</h3>
+                </div>
 
-              {/* Skill Bars */}
-              {skillGroup.items.map((skill, index) => (
-                <SkillBar
-                  key={skill.name}
-                  name={skill.name}
-                  level={skill.level}
-                  index={index}
-                />
-              ))}
-            </motion.div>
-          ))}
-        </motion.div>
+                {/* Skill Bars */}
+                {skillGroup.items.map((skill, index) => (
+                  <SkillBar
+                    key={skill.name}
+                    name={skill.name}
+                    level={skill.level}
+                    index={index}
+                  />
+                ))}
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   )
