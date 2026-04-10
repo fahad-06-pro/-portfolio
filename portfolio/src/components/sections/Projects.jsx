@@ -1,15 +1,22 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FaGithub, FaExternalLinkAlt, FaEye } from 'react-icons/fa'
-import { useScrollAnimation, fadeUpVariants, staggerContainerVariants } from '../../hooks/useScrollAnimation'
+import { ExternalLink, Github } from 'lucide-react'
+import { useInView } from 'react-intersection-observer'
 import { projects } from '../../data/portfolioData'
 
 const ProjectCard = ({ project, index }) => {
   const [hovered, setHovered] = useState(false)
+  const [ref, inView] = useInView({
+    threshold: 0.1,
+    triggerOnce: false,
+  })
 
   return (
     <motion.div
-      variants={fadeUpVariants}
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
       className="relative rounded-2xl overflow-hidden group cursor-pointer"
       style={{
         background: 'rgba(18, 20, 74, 0.6)',
@@ -23,8 +30,8 @@ const ProjectCard = ({ project, index }) => {
         borderColor: 'rgba(123, 47, 190, 0.5)',
         boxShadow: '0 20px 60px rgba(123,47,190,0.25)',
       }}
-      transition={{ duration: 0.3 }}
     >
+      {/* Project Image */}
       <div className="relative h-48 overflow-hidden">
         <img
           src={project.image}
@@ -35,13 +42,18 @@ const ProjectCard = ({ project, index }) => {
             e.target.nextSibling.style.display = 'flex'
           }}
         />
+        {/* Fallback */}
         <div
-          className="absolute inset-0 items-center justify-center text-5xl hidden"
-          style={{ background: 'linear-gradient(135deg, #12144A, #1a1b4b)' }}
+          className="absolute inset-0 items-center justify-center text-5xl"
+          style={{
+            background: 'linear-gradient(135deg, #12144A, #1a1b4b)',
+            display: 'none',
+          }}
         >
           {project.id === 1 ? '🛒' : project.id === 2 ? '✅' : '✈️'}
         </div>
 
+        {/* Overlay on hover */}
         <AnimatePresence>
           {hovered && (
             <motion.div
@@ -65,7 +77,7 @@ const ProjectCard = ({ project, index }) => {
                   transition={{ delay: 0.1 }}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <FaExternalLinkAlt size={18} />
+                  <ExternalLink size={18} />
                 </motion.a>
               )}
               <motion.a
@@ -73,7 +85,10 @@ const ProjectCard = ({ project, index }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-12 h-12 rounded-full flex items-center justify-center text-white"
-                style={{ background: 'rgba(123, 47, 190, 0.5)', border: '2px solid #7B2FBE' }}
+                style={{
+                  background: 'rgba(123, 47, 190, 0.5)',
+                  border: '2px solid #7B2FBE',
+                }}
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
                 initial={{ scale: 0 }}
@@ -81,18 +96,25 @@ const ProjectCard = ({ project, index }) => {
                 transition={{ delay: 0.15 }}
                 onClick={(e) => e.stopPropagation()}
               >
-                <FaGithub size={18} />
+                <Github size={18} />
               </motion.a>
             </motion.div>
           )}
         </AnimatePresence>
 
+        {/* Status Badge */}
         <div className="absolute top-3 left-3">
           <span
             className="px-2 py-1 rounded-full text-xs font-mono"
             style={{
-              background: project.status === 'Live' ? 'rgba(34, 197, 94, 0.2)' : 'rgba(251, 191, 36, 0.2)',
-              border: project.status === 'Live' ? '1px solid rgba(34, 197, 94, 0.5)' : '1px solid rgba(251, 191, 36, 0.5)',
+              background:
+                project.status === 'Live'
+                  ? 'rgba(34, 197, 94, 0.2)'
+                  : 'rgba(251, 191, 36, 0.2)',
+              border:
+                project.status === 'Live'
+                  ? '1px solid rgba(34, 197, 94, 0.5)'
+                  : '1px solid rgba(251, 191, 36, 0.5)',
               color: project.status === 'Live' ? '#22C55E' : '#FBBF24',
             }}
           >
@@ -100,6 +122,7 @@ const ProjectCard = ({ project, index }) => {
           </span>
         </div>
 
+        {/* Featured Badge */}
         {project.featured && (
           <div className="absolute top-3 right-3">
             <span
@@ -116,6 +139,7 @@ const ProjectCard = ({ project, index }) => {
         )}
       </div>
 
+      {/* Card Content */}
       <div className="p-6">
         <div className="flex items-start justify-between mb-3">
           <h3 className="text-lg font-bold text-white">{project.title}</h3>
@@ -135,6 +159,7 @@ const ProjectCard = ({ project, index }) => {
           {project.description}
         </p>
 
+        {/* Tech Stack */}
         <div className="flex flex-wrap gap-2 mb-4">
           {project.tech.map((tech) => (
             <span key={tech} className="tech-tag">
@@ -143,17 +168,21 @@ const ProjectCard = ({ project, index }) => {
           ))}
         </div>
 
-        <div className="flex gap-3 pt-4" style={{ borderTop: '1px solid rgba(30, 32, 80, 0.8)' }}>
+        {/* Links */}
+        <div
+          className="flex gap-3 pt-4"
+          style={{ borderTop: '1px solid rgba(30, 32, 80, 0.8)' }}
+        >
           {project.liveLink !== '#' && (
             <motion.a
               href={project.liveLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-xs font-medium transition-colors duration-300"
+              className="flex items-center gap-2 text-xs font-medium"
               style={{ color: '#00D4FF' }}
               whileHover={{ x: 3 }}
             >
-              <FaExternalLinkAlt size={14} />
+              <ExternalLink size={14} />
               Live Demo
             </motion.a>
           )}
@@ -161,11 +190,11 @@ const ProjectCard = ({ project, index }) => {
             href={project.githubLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-xs font-medium transition-colors duration-300"
+            className="flex items-center gap-2 text-xs font-medium"
             style={{ color: '#8892B0' }}
             whileHover={{ x: 3, color: '#FFFFFF' }}
           >
-            <FaGithub size={14} />
+            <Github size={14} />
             Source Code
           </motion.a>
         </div>
@@ -176,11 +205,18 @@ const ProjectCard = ({ project, index }) => {
 
 const Projects = () => {
   const [filter, setFilter] = useState('All')
-  const { ref: titleRef, controls: titleControls } = useScrollAnimation()
-  const { ref: projectsRef, controls: projectsControls } = useScrollAnimation()
+  const [titleRef, titleInView] = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+  })
 
-  const categories = ['All', 'Full Stack', 'Frontend', 'Backend']
-  const filteredProjects = filter === 'All' ? projects : projects.filter((p) => p.category === filter)
+  // ✅ FIXED - Sirf jo categories projects mein hain wohi dikhao
+  const availableCategories = ['All', ...new Set(projects.map((p) => p.category))]
+
+  const filteredProjects =
+    filter === 'All'
+      ? projects
+      : projects.filter((p) => p.category === filter)
 
   return (
     <section
@@ -188,6 +224,7 @@ const Projects = () => {
       className="section-padding relative overflow-hidden"
       style={{ background: 'linear-gradient(180deg, #0B0C2A 0%, #0f1035 100%)' }}
     >
+      {/* Background Glow */}
       <div
         className="absolute top-1/2 right-0 w-96 h-96 rounded-full pointer-events-none"
         style={{
@@ -197,11 +234,12 @@ const Projects = () => {
       />
 
       <div className="max-w-7xl mx-auto">
+        {/* Title */}
         <motion.div
           ref={titleRef}
-          variants={fadeUpVariants}
-          initial="hidden"
-          animate={titleControls}
+          initial={{ opacity: 0, y: 40 }}
+          animate={titleInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
           <p className="text-sm font-mono mb-3" style={{ color: '#00D4FF' }}>
@@ -229,16 +267,23 @@ const Projects = () => {
           </p>
         </motion.div>
 
+        {/* ✅ FIXED - Dynamic Filter Buttons */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {categories.map((cat) => (
+          {availableCategories.map((cat) => (
             <motion.button
               key={cat}
               onClick={() => setFilter(cat)}
               className="px-5 py-2 rounded-full text-sm font-medium transition-all duration-300"
               style={{
-                background: filter === cat ? 'linear-gradient(135deg, #7B2FBE, #00D4FF)' : 'rgba(18, 20, 74, 0.6)',
+                background:
+                  filter === cat
+                    ? 'linear-gradient(135deg, #7B2FBE, #00D4FF)'
+                    : 'rgba(18, 20, 74, 0.6)',
                 color: filter === cat ? '#FFFFFF' : '#8892B0',
-                border: filter === cat ? 'none' : '1px solid rgba(30, 32, 80, 0.8)',
+                border:
+                  filter === cat
+                    ? 'none'
+                    : '1px solid rgba(30, 32, 80, 0.8)',
               }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -248,24 +293,48 @@ const Projects = () => {
           ))}
         </div>
 
-        <motion.div
-          ref={projectsRef}
-          variants={staggerContainerVariants}
-          initial="hidden"
-          animate={projectsControls}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          <AnimatePresence mode="wait">
+        {/* ✅ FIXED - Projects Grid with AnimatePresence */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={filter}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
             {filteredProjects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
+              <ProjectCard
+                key={project.id}
+                project={project}
+                index={index}
+              />
             ))}
-          </AnimatePresence>
-        </motion.div>
+          </motion.div>
+        </AnimatePresence>
 
+        {/* Empty State */}
+        {filteredProjects.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-20"
+          >
+            <p className="text-4xl mb-4">🚧</p>
+            <p className="text-white font-semibold mb-2">
+              No projects in this category yet
+            </p>
+            <p style={{ color: '#8892B0' }} className="text-sm">
+              Coming soon! Stay tuned.
+            </p>
+          </motion.div>
+        )}
+
+        {/* Add More Projects Note */}
         <motion.div
-          variants={fadeUpVariants}
-          initial="hidden"
-          animate="visible"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
           className="text-center mt-16"
         >
           <div
@@ -277,7 +346,9 @@ const Projects = () => {
           >
             <span className="text-2xl">🚀</span>
             <div className="text-left">
-              <p className="text-white font-semibold text-sm">More projects coming soon!</p>
+              <p className="text-white font-semibold text-sm">
+                More projects coming soon!
+              </p>
               <p className="text-xs" style={{ color: '#8892B0' }}>
                 Currently working on exciting new projects
               </p>
