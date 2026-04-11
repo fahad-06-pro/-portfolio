@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { MapPin, Mail, Phone, Calendar, Target, Coffee } from 'lucide-react'
+import { FaMapMarkerAlt, FaEnvelope, FaPhone, FaCalendarAlt, FaBullseye, FaCoffee } from 'react-icons/fa'
 import { useScrollAnimation, fadeUpVariants, staggerContainerVariants, slideInLeftVariants, slideInRightVariants } from '../../hooks/useScrollAnimation'
 import { personalInfo, socialLinks, services, stats } from '../../data/portfolioData'
 
@@ -14,7 +14,6 @@ const About = () => {
     <section id="about" className="section-padding relative overflow-hidden"
       style={{ background: 'linear-gradient(180deg, #0B0C2A 0%, #0f1035 100%)' }}
     >
-      {/* Background Glow */}
       <div className="absolute top-0 right-0 w-96 h-96 rounded-full pointer-events-none"
         style={{
           background: 'radial-gradient(circle, rgba(0,212,255,0.05) 0%, transparent 70%)',
@@ -23,7 +22,6 @@ const About = () => {
       />
 
       <div className="max-w-7xl mx-auto">
-        {/* Section Title */}
         <motion.div
           ref={titleRef}
           variants={fadeUpVariants}
@@ -49,9 +47,7 @@ const About = () => {
           />
         </motion.div>
 
-        {/* Main Content */}
         <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
-          {/* Left - Image */}
           <motion.div
             ref={leftRef}
             variants={slideInLeftVariants}
@@ -67,7 +63,6 @@ const About = () => {
                   background: 'linear-gradient(135deg, #12144A, #1a1b4b)',
                 }}
               >
-                {/* ✅ UPDATED SRC */}
                 <img
                   src="/assets/images/fahad.jpeg"
                   alt="Fahad Ali"
@@ -85,7 +80,6 @@ const About = () => {
                 </div>
               </div>
 
-              {/* Floating Info Cards */}
               <motion.div
                 className="absolute -bottom-6 -right-6 p-4 rounded-xl"
                 style={{
@@ -128,7 +122,6 @@ const About = () => {
             </div>
           </motion.div>
 
-          {/* Right - Text Content */}
           <motion.div
             ref={rightRef}
             variants={slideInRightVariants}
@@ -150,15 +143,14 @@ const About = () => {
               {personalInfo.about}
             </p>
 
-            {/* Info List */}
             <div className="space-y-3 mb-8">
               {[
-                { icon: MapPin, label: 'Location', value: personalInfo.location },
-                { icon: Mail, label: 'Email', value: personalInfo.email },
-                { icon: Phone, label: 'Phone', value: personalInfo.phone },
-                { icon: Calendar, label: 'Experience', value: personalInfo.experience },
-                { icon: Target, label: 'Goal', value: 'Tech Entrepreneur' },
-                { icon: Coffee, label: 'Status', value: personalInfo.availability },
+                { icon: FaMapMarkerAlt, label: 'Location', value: personalInfo.location },
+                { icon: FaEnvelope, label: 'Email', value: personalInfo.email },
+                { icon: FaPhone, label: 'Phone', value: personalInfo.phone },
+                { icon: FaCalendarAlt, label: 'Experience', value: personalInfo.experience },
+                { icon: FaBullseye, label: 'Goal', value: 'Tech Entrepreneur' },
+                { icon: FaCoffee, label: 'Status', value: personalInfo.availability },
               ].map(({ icon: Icon, label, value }) => (
                 <div key={label} className="flex items-center gap-3">
                   <div
@@ -175,7 +167,6 @@ const About = () => {
               ))}
             </div>
 
-            {/* Buttons */}
             <div className="flex flex-wrap gap-4">
               <motion.a
                 href="mailto:ujanfahad@gmail.com"
@@ -195,10 +186,7 @@ const About = () => {
                   border: '2px solid rgba(123, 47, 190, 0.5)',
                   color: '#7B2FBE',
                 }}
-                whileHover={{
-                  scale: 1.05,
-                  background: 'rgba(123, 47, 190, 0.1)',
-                }}
+                whileHover={{ scale: 1.05, background: 'rgba(123, 47, 190, 0.1)' }}
                 whileTap={{ scale: 0.95 }}
               >
                 View GitHub
@@ -207,7 +195,6 @@ const About = () => {
           </motion.div>
         </div>
 
-        {/* Stats */}
         <motion.div
           ref={statsRef}
           variants={staggerContainerVariants}
@@ -248,7 +235,6 @@ const About = () => {
           ))}
         </motion.div>
 
-        {/* Services */}
         <motion.div
           ref={servicesRef}
           variants={staggerContainerVariants}

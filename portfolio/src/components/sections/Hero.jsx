@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Instagram, Mail, ArrowDown } from 'lucide-react'
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaArrowDown } from 'react-icons/fa'
 import { personalInfo, socialLinks } from '../../data/portfolioData'
 
 const roles = [
@@ -18,7 +18,6 @@ const Hero = () => {
   const [charIndex, setCharIndex] = useState(0)
   const canvasRef = useRef(null)
 
-  // Typewriter Effect
   useEffect(() => {
     const role = roles[currentRole]
     const typingSpeed = isDeleting ? 50 : 100
@@ -43,7 +42,6 @@ const Hero = () => {
     return () => clearTimeout(timer)
   }, [charIndex, isDeleting, currentRole])
 
-  // Particle Canvas
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -119,14 +117,12 @@ const Hero = () => {
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{ background: 'linear-gradient(135deg, #0B0C2A 0%, #1a1b4b 50%, #0B0C2A 100%)' }}
     >
-      {/* Particle Canvas */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 pointer-events-none"
         style={{ zIndex: 0 }}
       />
 
-      {/* Glow Orbs */}
       <div
         className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full pointer-events-none"
         style={{
@@ -142,12 +138,11 @@ const Hero = () => {
         }}
       />
 
-      {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
+
           {/* Left - Text */}
           <div className="order-2 lg:order-1">
-            {/* Badge */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -164,7 +159,6 @@ const Hero = () => {
               </span>
             </motion.div>
 
-            {/* Name */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -187,7 +181,6 @@ const Hero = () => {
               </h1>
             </motion.div>
 
-            {/* Typewriter */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -197,13 +190,9 @@ const Hero = () => {
               <span style={{ color: '#00D4FF' }} className="text-xl sm:text-2xl font-mono font-semibold">
                 {displayText}
               </span>
-              <span
-                className="w-0.5 h-7 animate-pulse"
-                style={{ background: '#7B2FBE' }}
-              />
+              <span className="w-0.5 h-7 animate-pulse" style={{ background: '#7B2FBE' }} />
             </motion.div>
 
-            {/* Description */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -215,7 +204,6 @@ const Hero = () => {
               to user dashboards and admin panels — I build it all.
             </motion.p>
 
-            {/* Stats */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -238,14 +226,11 @@ const Hero = () => {
                   >
                     {stat.number}
                   </p>
-                  <p className="text-xs" style={{ color: '#8892B0' }}>
-                    {stat.label}
-                  </p>
+                  <p className="text-xs" style={{ color: '#8892B0' }}>{stat.label}</p>
                 </div>
               ))}
             </motion.div>
 
-            {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -259,13 +244,8 @@ const Hero = () => {
                   document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
                 }}
                 className="px-8 py-3 rounded-full font-semibold text-white transition-all duration-300"
-                style={{
-                  background: 'linear-gradient(135deg, #7B2FBE, #00D4FF)',
-                }}
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: '0 0 30px rgba(123,47,190,0.5)',
-                }}
+                style={{ background: 'linear-gradient(135deg, #7B2FBE, #00D4FF)' }}
+                whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(123,47,190,0.5)' }}
                 whileTap={{ scale: 0.95 }}
               >
                 View My Work
@@ -276,35 +256,26 @@ const Hero = () => {
                   document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
                 }}
                 className="px-8 py-3 rounded-full font-semibold transition-all duration-300"
-                style={{
-                  border: '2px solid #7B2FBE',
-                  color: '#7B2FBE',
-                }}
-                whileHover={{
-                  scale: 1.05,
-                  background: 'rgba(123, 47, 190, 0.1)',
-                }}
+                style={{ border: '2px solid #7B2FBE', color: '#7B2FBE' }}
+                whileHover={{ scale: 1.05, background: 'rgba(123, 47, 190, 0.1)' }}
                 whileTap={{ scale: 0.95 }}
               >
                 Hire Me
               </motion.button>
             </motion.div>
 
-            {/* Social Links */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
               className="flex items-center gap-4"
             >
-              <span className="text-sm" style={{ color: '#8892B0' }}>
-                Follow me:
-              </span>
+              <span className="text-sm" style={{ color: '#8892B0' }}>Follow me:</span>
               {[
-                { icon: Github, href: socialLinks.github, label: 'GitHub' },
-                { icon: Linkedin, href: socialLinks.linkedin, label: 'LinkedIn' },
-                { icon: Instagram, href: socialLinks.instagram, label: 'Instagram' },
-                { icon: Mail, href: socialLinks.email, label: 'Email' },
+                { icon: FaGithub, href: socialLinks.github, label: 'GitHub' },
+                { icon: FaLinkedin, href: socialLinks.linkedin, label: 'LinkedIn' },
+                { icon: FaInstagram, href: socialLinks.instagram, label: 'Instagram' },
+                { icon: FaEnvelope, href: socialLinks.email, label: 'Email' },
               ].map(({ icon: Icon, href, label }) => (
                 <motion.a
                   key={label}
@@ -340,7 +311,6 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="relative"
             >
-              {/* Rotating Ring */}
               <motion.div
                 className="absolute inset-0 rounded-full"
                 style={{
@@ -352,7 +322,6 @@ const Hero = () => {
                 transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
               />
 
-              {/* Photo Container */}
               <div
                 className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden"
                 style={{
@@ -360,7 +329,6 @@ const Hero = () => {
                   background: 'linear-gradient(#0B0C2A, #0B0C2A) padding-box, linear-gradient(135deg, #7B2FBE, #00D4FF) border-box',
                 }}
               >
-                {/* ✅ FIXED - Correct image path */}
                 <img
                   src="/assets/images/fahad.jpeg"
                   alt="Fahad Ali"
@@ -370,9 +338,8 @@ const Hero = () => {
                     e.target.nextSibling.style.display = 'flex'
                   }}
                 />
-                {/* Fallback */}
                 <div
-                  className="absolute inset-0 items-center justify-center text-6xl font-bold hidden"
+                  className="absolute inset-0 items-center justify-center text-6xl font-bold"
                   style={{
                     background: 'linear-gradient(135deg, #1a1b4b, #0B0C2A)',
                     color: '#7B2FBE',
@@ -383,7 +350,6 @@ const Hero = () => {
                 </div>
               </div>
 
-              {/* Floating Badges */}
               <motion.div
                 className="absolute -top-4 -right-4 px-3 py-2 rounded-xl text-xs font-mono text-white"
                 style={{
@@ -429,18 +395,14 @@ const Hero = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer"
-          onClick={() =>
-            document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
-          }
+          onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
         >
-          <span className="text-xs font-mono" style={{ color: '#8892B0' }}>
-            Scroll Down
-          </span>
+          <span className="text-xs font-mono" style={{ color: '#8892B0' }}>Scroll Down</span>
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 1.5, repeat: Infinity }}
           >
-            <ArrowDown size={16} style={{ color: '#7B2FBE' }} />
+            <FaArrowDown size={16} style={{ color: '#7B2FBE' }} />
           </motion.div>
         </motion.div>
       </div>

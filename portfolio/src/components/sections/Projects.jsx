@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ExternalLink, Github } from 'lucide-react'
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
 import { useInView } from 'react-intersection-observer'
 import { projects } from '../../data/portfolioData'
 
@@ -77,7 +77,7 @@ const ProjectCard = ({ project, index }) => {
                   transition={{ delay: 0.1 }}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <ExternalLink size={18} />
+                  <FaExternalLinkAlt size={18} />
                 </motion.a>
               )}
               <motion.a
@@ -96,7 +96,7 @@ const ProjectCard = ({ project, index }) => {
                 transition={{ delay: 0.15 }}
                 onClick={(e) => e.stopPropagation()}
               >
-                <Github size={18} />
+                <FaGithub size={18} />
               </motion.a>
             </motion.div>
           )}
@@ -182,7 +182,7 @@ const ProjectCard = ({ project, index }) => {
               style={{ color: '#00D4FF' }}
               whileHover={{ x: 3 }}
             >
-              <ExternalLink size={14} />
+              <FaExternalLinkAlt size={14} />
               Live Demo
             </motion.a>
           )}
@@ -194,7 +194,7 @@ const ProjectCard = ({ project, index }) => {
             style={{ color: '#8892B0' }}
             whileHover={{ x: 3, color: '#FFFFFF' }}
           >
-            <Github size={14} />
+            <FaGithub size={14} />
             Source Code
           </motion.a>
         </div>
@@ -210,7 +210,6 @@ const Projects = () => {
     triggerOnce: true,
   })
 
-  // ✅ FIXED - Sirf jo categories projects mein hain wohi dikhao
   const availableCategories = ['All', ...new Set(projects.map((p) => p.category))]
 
   const filteredProjects =
@@ -267,7 +266,7 @@ const Projects = () => {
           </p>
         </motion.div>
 
-        {/* ✅ FIXED - Dynamic Filter Buttons */}
+        {/* Filter Buttons */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
           {availableCategories.map((cat) => (
             <motion.button
@@ -293,7 +292,7 @@ const Projects = () => {
           ))}
         </div>
 
-        {/* ✅ FIXED - Projects Grid with AnimatePresence */}
+        {/* Projects Grid */}
         <AnimatePresence mode="wait">
           <motion.div
             key={filter}

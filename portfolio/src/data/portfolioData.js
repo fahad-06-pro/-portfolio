@@ -14,7 +14,7 @@ export const socialLinks = {
   github: "https://github.com/fahad-06-pro",
   linkedin: "https://www.linkedin.com/in/fahad-ali-ujjan-418986336/",
   instagram: "https://www.instagram.com/mern_builds_with_fahad?igsh=MWVxeTZ6a2Uxcnli",
-  email: "mailto:ujanfahad@gmail.com",
+  email: "https://mail.google.com/mail/?view=cm&to=ujanfahad@gmail.com",
 }
 
 export const projects = [

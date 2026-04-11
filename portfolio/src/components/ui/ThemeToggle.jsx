@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Sun, Moon } from 'lucide-react'
+import { FaSun, FaMoon } from 'react-icons/fa'
 import { useTheme } from '../../context/ThemeContext'
 
 const ThemeToggle = () => {
@@ -30,9 +30,9 @@ const ThemeToggle = () => {
         }}
       >
         {isDark ? (
-          <Moon size={12} style={{ color: '#7B2FBE' }} />
+          <FaMoon size={12} style={{ color: '#7B2FBE' }} />
         ) : (
-          <Sun size={12} style={{ color: '#FFB800' }} />
+          <FaSun size={12} style={{ color: '#FFB800' }} />
         )}
       </motion.div>
     </motion.button>

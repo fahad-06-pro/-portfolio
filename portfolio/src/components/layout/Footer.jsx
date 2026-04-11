@@ -60,14 +60,11 @@ const Footer = () => {
                 <MdCode size={20} color="white" />
               </div>
               <div>
-                <p
-                  className="text-lg font-bold"
-                  style={{
-                    background: 'linear-gradient(135deg, #7B2FBE, #00D4FF)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                  }}
-                >
+                <p className="text-lg font-bold" style={{
+                  background: 'linear-gradient(135deg, #7B2FBE, #00D4FF)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}>
                   Fahad Ali
                 </p>
                 <p className="text-xs font-mono" style={{ color: '#8892B0' }}>
@@ -83,13 +80,15 @@ const Footer = () => {
 
             <div className="space-y-3 mb-8">
               {[
-                { icon: FaEnvelope, value: personalInfo.email, href: `mailto:${personalInfo.email}` },
-                { icon: FaPhone, value: personalInfo.phone, href: `tel:${personalInfo.phone}` },
-                { icon: FaMapMarkerAlt, value: personalInfo.location, href: '#' },
+                { icon: FaEnvelope, value: personalInfo.email, href: 'https://mail.google.com/mail/?view=cm&to=ujanfahad@gmail.com' },
+                { icon: FaPhone, value: personalInfo.phone, href: 'tel:+923713608007' },
+                { icon: FaMapMarkerAlt, value: personalInfo.location, href: 'https://www.google.com/maps/search/Sukkur,+Sindh,+Pakistan' },
               ].map(({ icon: Icon, value, href }) => (
                 <motion.a
                   key={value}
                   href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-3 text-sm transition-colors duration-300 group"
                   style={{ color: '#8892B0' }}
                   whileHover={{ x: 3 }}
@@ -207,7 +206,6 @@ const Footer = () => {
       <div className="border-t" style={{ borderColor: 'rgba(30, 32, 80, 0.8)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-
             <motion.p
               className="text-xs flex items-center gap-2"
               style={{ color: '#8892B0' }}
