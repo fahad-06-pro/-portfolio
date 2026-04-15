@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaArrowDown } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaArrowDown, FaDownload } from 'react-icons/fa'
 import { personalInfo, socialLinks } from '../../data/portfolioData'
 
 const roles = [
@@ -231,12 +231,14 @@ const Hero = () => {
               ))}
             </motion.div>
 
+            {/* Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
               className="flex flex-wrap gap-4 mb-10"
             >
+              {/* View My Work Button */}
               <motion.a
                 href="#projects"
                 onClick={(e) => {
@@ -251,17 +253,22 @@ const Hero = () => {
                 View My Work
               </motion.a>
 
-              <motion.button
-                onClick={() => {
-                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
-                }}
-                className="px-8 py-3 rounded-full font-semibold transition-all duration-300"
+              {/* Download Resume Button */}
+              <motion.a
+                href="/resume.pdf"
+                download="Fahad_Ali_Resume.pdf"
+                className="px-8 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2"
                 style={{ border: '2px solid #7B2FBE', color: '#7B2FBE' }}
-                whileHover={{ scale: 1.05, background: 'rgba(123, 47, 190, 0.1)' }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  background: 'rgba(123, 47, 190, 0.1)',
+                  boxShadow: '0 0 20px rgba(123,47,190,0.3)'
+                }}
                 whileTap={{ scale: 0.95 }}
               >
-                Hire Me
-              </motion.button>
+                <FaDownload size={14} />
+                Download Resume
+              </motion.a>
             </motion.div>
 
             <motion.div
